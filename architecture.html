@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architecture — Crestwood People</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --sand: #f5ebe0;
+      --blush: #f2d5cf;
+      --seafoam: #b8e0d2;
+      --sky: #a2d2ff;
+      --lavender: #cdb4db;
+      --slate: #5e6472;
+      --ink: #2b2d42;
+      --glass-bg: rgba(255,255,255,0.35);
+      --glass-border: rgba(255,255,255,0.55);
+      --glass-blur: 20px;
+      --glass-shadow: 0 8px 32px rgba(91,112,131,0.15);
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+    }
+
+    html, body {
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse at 20% 0%, var(--lavender) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 10%, var(--sky) 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 100%, var(--seafoam) 0%, transparent 45%),
+        radial-gradient(ellipse at 10% 80%, var(--blush) 0%, transparent 40%),
+        linear-gradient(160deg, var(--sand) 0%, #eae4f7 50%, #d1ecf9 100%);
+      background-attachment: fixed;
+      padding: 2.5rem 3rem;
+    }
+
+    /* ── Glass ── */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur));
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+    }
+
+    /* ── Slide container (16:9) ── */
+    .slide {
+      width: 100%;
+      max-width: 1280px;
+    }
+
+    /* ── Header ── */
+    .slide-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .slide-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .slide-header .subtitle {
+      font-size: 1rem;
+      color: var(--slate);
+    }
+
+    /* ── Flow row ── */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* ── Arrow connector ── */
+    .arrow {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      padding: 0 0.25rem;
+    }
+
+    /* ── Node ── */
+    .node {
+      flex: 1;
+      min-width: 0;
+      padding: 1.5rem 1.25rem;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .node-step {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-bottom: 0.35rem;
+    }
+    .node-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+    .node-detail {
+      font-size: 0.85rem;
+      color: var(--slate);
+      line-height: 1.5;
+      max-width: 220px;
+    }
+    .node-files {
+      margin-top: 0.65rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .node-file {
+      font-size: 0.7rem;
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      color: var(--slate);
+      background: rgba(255,255,255,0.35);
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    /* ── Badge ── */
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      margin-bottom: 0.6rem;
+    }
+    .badge-idx {
+      color: #5b21b6;
+      background: rgba(196,181,253,0.5);
+      border: 1px solid rgba(196,181,253,0.7);
+    }
+    .badge-api {
+      color: #166534;
+      background: rgba(187,247,208,0.5);
+      border: 1px solid rgba(187,247,208,0.7);
+    }
+    .badge-email {
+      color: #1e40af;
+      background: rgba(191,219,254,0.5);
+      border: 1px solid rgba(191,219,254,0.7);
+    }
+    .badge-okta {
+      color: #6b21a8;
+      background: rgba(205,180,219,0.5);
+      border: 1px solid rgba(205,180,219,0.7);
+    }
+
+    /* ── Accent styles ── */
+    .idx-accent {
+      background: linear-gradient(135deg, rgba(126,166,244,0.2) 0%, rgba(167,139,250,0.2) 100%);
+      border: 1px solid rgba(167,139,250,0.5);
+      box-shadow: 0 8px 32px rgba(167,139,250,0.18);
+    }
+    .api-accent {
+      background: rgba(184,224,210,0.25);
+      border: 1px solid rgba(184,224,210,0.6);
+      box-shadow: 0 8px 32px rgba(184,224,210,0.18);
+    }
+    .email-accent {
+      background: rgba(162,210,255,0.25);
+      border: 1px solid rgba(162,210,255,0.6);
+      box-shadow: 0 8px 32px rgba(162,210,255,0.18);
+    }
+    .okta-accent {
+      background: rgba(205,180,219,0.2);
+      border: 1px solid rgba(205,180,219,0.5);
+      box-shadow: 0 8px 32px rgba(205,180,219,0.15);
+    }
+
+    /* ── Legend ── */
+    .legend {
+      margin-top: 2.5rem;
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius-md);
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      justify-content: center;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--slate);
+    }
+    .legend-swatch {
+      width: 16px;
+      height: 16px;
+      border-radius: 5px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="slide">
+    <div class="slide-header">
+      <h1>Okta IDX Integration Architecture</h1>
+      <span class="subtitle">Crestwood People — Employee Onboarding Flow</span>
+    </div>
+
+    <!-- ── Horizontal flow ── -->
+    <div class="flow">
+
+      <!-- 1. Onboarding Page -->
+      <div class="node idx-accent">
+        <span class="badge badge-idx">Step 1</span>
+        <div class="node-title">Onboarding Form</div>
+        <div class="node-detail">
+          Admin enters employee name &amp; email.
+          A temp password is auto-generated.
+        </div>
+        <div class="node-files">
+          <span class="node-file">app/register/page.js</span>
+        </div>
+      </div>
+
+      <div class="arrow">
+        <svg width="48" height="24"><path d="M4 12 L36 12" stroke="var(--slate)" stroke-width="2" stroke-dasharray="5,4" fill="none"/><polygon points="36,7 48,12 36,17" fill="var(--slate)"/></svg>
+      </div>
+
+      <!-- 2. IDX Register -->
+      <div class="node idx-accent">
+        <span class="badge badge-idx">Step 2</span>
+        <div class="node-title">IDX Register</div>
+        <div class="node-detail">
+          <strong>idx.register()</strong> creates the user via Okta Identity Engine with app context.
+          Handles PENDING loop for password enrollment.
+        </div>
+        <div class="node-files">
+          <span class="node-file">app/register/actions.js</span>
+          <span class="node-file">lib/okta.js</span>
+        </div>
+      </div>
+
+      <div class="arrow">
+        <svg width="48" height="24"><path d="M4 12 L36 12" stroke="var(--slate)" stroke-width="2" stroke-dasharray="5,4" fill="none"/><polygon points="36,7 48,12 36,17" fill="var(--slate)"/></svg>
+      </div>
+
+      <!-- 3. Reset Token -->
+      <div class="node api-accent">
+        <span class="badge badge-api">Step 3</span>
+        <div class="node-title">Reset Token</div>
+        <div class="node-detail">
+          Looks up user by email, calls <strong>lifecycle/reset_password</strong>
+          with sendEmail=false to get a reset URL.
+        </div>
+        <div class="node-files">
+          <span class="node-file">lib/okta-admin.js</span>
+        </div>
+      </div>
+
+      <div class="arrow">
+        <svg width="48" height="24"><path d="M4 12 L36 12" stroke="var(--slate)" stroke-width="2" stroke-dasharray="5,4" fill="none"/><polygon points="36,7 48,12 36,17" fill="var(--slate)"/></svg>
+      </div>
+
+      <!-- 4. Branded Email -->
+      <div class="node email-accent">
+        <span class="badge badge-email">Step 4</span>
+        <div class="node-title">Activation Email</div>
+        <div class="node-detail">
+          Resend delivers a Crestwood-branded email with a
+          "Set Up Your Password" link.
+        </div>
+        <div class="node-files">
+          <span class="node-file">lib/email.js</span>
+        </div>
+      </div>
+
+      <div class="arrow">
+        <svg width="48" height="24"><path d="M4 12 L36 12" stroke="var(--slate)" stroke-width="2" stroke-dasharray="5,4" fill="none"/><polygon points="36,7 48,12 36,17" fill="var(--slate)"/></svg>
+      </div>
+
+      <!-- 5. Employee sets password -->
+      <div class="node okta-accent">
+        <span class="badge badge-okta">Step 5</span>
+        <div class="node-title">Password Setup</div>
+        <div class="node-detail">
+          Employee clicks the link, sets their own password on Okta, and is now fully active.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Legend ── -->
+    <div class="legend glass">
+      <div class="legend-item">
+        <span class="legend-swatch" style="background:linear-gradient(135deg,rgba(126,166,244,0.4),rgba(167,139,250,0.4));border:1px solid rgba(167,139,250,0.5);"></span>
+        Okta IDX Pipeline
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch" style="background:rgba(184,224,210,0.4);border:1px solid rgba(184,224,210,0.6);"></span>
+        Management API
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch" style="background:rgba(162,210,255,0.4);border:1px solid rgba(162,210,255,0.6);"></span>
+        Resend Email
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch" style="background:rgba(205,180,219,0.4);border:1px solid rgba(205,180,219,0.5);"></span>
+        Okta Identity Engine
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
