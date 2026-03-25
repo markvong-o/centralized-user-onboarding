@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { setSession } from '../../../../lib/session';
 
-const ADMIN_EMAILS = ['mark.vong@atko.email'];
+const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(Boolean);
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);

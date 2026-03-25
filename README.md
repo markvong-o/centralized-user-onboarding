@@ -65,6 +65,7 @@ Create a `.env.local` file in the project root (see [`.env.example`](.env.exampl
 | `SESSION_SECRET` | 64-character hex string (32 bytes) for AES-256-GCM session encryption. Generate with: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` |
 | `RESEND_API_KEY` | API key from [Resend](https://resend.com/) for sending emails |
 | `RESEND_FROM_EMAIL` | Verified sender email address in Resend (e.g. `onboarding@yourdomain.com`) |
+| `ADMIN_EMAILS` | Comma-separated list of email addresses granted the admin role (e.g. `admin@example.com,hr@example.com`) |
 
 ---
 
