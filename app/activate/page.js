@@ -35,7 +35,7 @@ export default function ActivatePage() {
             <div className="success-icon">&#10003;</div>
             <h1>You're All Set</h1>
             <p className="subtitle">
-              Your password has been set. You can now sign in to Crestwood People.
+              Your password has been set. You can now sign in to Crestwood.
             </p>
             <a href="/api/auth/login" className="btn btn-primary">
               Sign In
@@ -69,7 +69,7 @@ export default function ActivatePage() {
         <div className="card glass">
           <h1>Set Up Your Password</h1>
           <p className="subtitle">
-            Welcome to Crestwood People. Choose a password to activate your account.
+            Welcome to Crestwood. Choose a password to activate your account.
           </p>
 
           {error && <div className="error-banner">{error}</div>}

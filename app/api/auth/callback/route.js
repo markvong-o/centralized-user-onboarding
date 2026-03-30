@@ -60,6 +60,10 @@ export async function GET(request) {
 
   // Create app session
   const email = idPayload.email || idPayload.sub;
+  console.log('[callback] idPayload:', JSON.stringify(idPayload, null, 2));
+  console.log('[callback] resolved email:', email);
+  console.log('[callback] ADMIN_EMAILS:', ADMIN_EMAILS);
+  console.log('[callback] isAdmin:', ADMIN_EMAILS.includes(email));
   setSession(response, {
     name: idPayload.name || '',
     email,

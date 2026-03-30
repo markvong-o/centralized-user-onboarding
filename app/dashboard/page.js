@@ -15,8 +15,8 @@ export default async function DashboardPage() {
         </h1>
         <p style={{ color: 'var(--slate)', fontSize: '0.95rem', marginTop: '0.25rem' }}>
           {isAdmin
-            ? 'Welcome back to Crestwood People. What would you like to do?'
-            : 'Welcome to Crestwood People.'}
+            ? 'Welcome back to Crestwood. What would you like to do?'
+            : 'Welcome to Crestwood.'}
         </p>
       </div>
 

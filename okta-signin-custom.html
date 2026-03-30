@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <!-- Styles generated from theme -->
+    <link href="{{themedStylesUrl}}" rel="stylesheet" type="text/css">
+    <!-- Favicon from theme -->
+    <link rel="shortcut icon" href="{{faviconUrl}}" type="image/x-icon"/>
+
+    <title>{{pageTitle}}</title>
+    {{{SignInWidgetResources}}}
+
+    <style nonce="{{nonceValue}}">
+        {{#useSiwGen3}}
+        html {
+            font-size: 87.5%;
+        }
+        {{/useSiwGen3}}
+
+        #login-bg-image-id {
+            background-image: {{bgImageUrl}};
+        }
+
+        /* ===== Custom Enhancements ===== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Background overlay with subtle gradient */
+        #login-bg-image-id {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-size: cover;
+            background-position: center;
+        }
+
+        #login-bg-image-id::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(0, 0, 0, 0.35) 0%,
+                rgba(0, 0, 0, 0.15) 50%,
+                rgba(0, 0, 0, 0.35) 100%
+            );
+            z-index: -1;
+        }
+
+        /* Floating shapes for visual depth */
+        .bg-shape {
+            position: fixed;
+            border-radius: 50%;
+            opacity: 0.06;
+            background: white;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .bg-shape--1 {
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            right: -80px;
+            animation: floatShape 20s ease-in-out infinite;
+        }
+
+        .bg-shape--2 {
+            width: 250px;
+            height: 250px;
+            bottom: -60px;
+            left: -40px;
+            animation: floatShape 16s ease-in-out infinite reverse;
+        }
+
+        .bg-shape--3 {
+            width: 150px;
+            height: 150px;
+            top: 40%;
+            left: 10%;
+            animation: floatShape 22s ease-in-out infinite 3s;
+        }
+
+        @keyframes floatShape {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(20px, -30px) scale(1.05); }
+            50% { transform: translate(-10px, 20px) scale(0.95); }
+            75% { transform: translate(15px, 10px) scale(1.02); }
+        }
+
+        /* Header bar */
+        .custom-header {
+            width: 100%;
+            padding: 20px 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 10;
+            position: relative;
+            animation: fadeSlideDown 0.6s ease-out;
+        }
+
+        .custom-header__title {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Welcome text above widget */
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 24px;
+            animation: fadeSlideUp 0.5s ease-out;
+        }
+
+        .welcome-section__heading {
+            color: #fff;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-section__subtext {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            font-weight: 400;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ===== Okta Sign-In Widget Color Overrides ===== */
+
+        /* Widget outer container — frosted glass card */
+        #okta-sign-in {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        /* Widget background — translucent white */
+        #okta-sign-in .auth-content,
+        #okta-sign-in .okta-sign-in-header,
+        #okta-sign-in .o-form-content {
+            background-color: rgba(255, 255, 255, 0.88);
+        }
+
+        #okta-sign-in .auth-container {
+            background-color: rgba(255, 255, 255, 0.88);
+            border: none;
+            box-shadow: none;
+        }
+
+        /* Header area */
+        #okta-sign-in .okta-sign-in-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        /* Text colors */
+        #okta-sign-in h2,
+        #okta-sign-in h3,
+        #okta-sign-in .okta-form-title {
+            color: #1a1a2e !important;
+        }
+
+        #okta-sign-in label,
+        #okta-sign-in .o-form-label {
+            color: #3a3a5c !important;
+        }
+
+        #okta-sign-in p,
+        #okta-sign-in .link,
+        #okta-sign-in a {
+            color: #4a4a7a;
+        }
+
+        #okta-sign-in a:hover {
+            color: #2a2a5e;
+        }
+
+        /* Input fields */
+        #okta-sign-in .o-form-input input,
+        #okta-sign-in .o-form-input textarea,
+        #okta-sign-in input[type="text"],
+        #okta-sign-in input[type="password"],
+        #okta-sign-in input[type="email"] {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            color: #1a1a2e;
+            border-radius: 8px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        #okta-sign-in .o-form-input input:focus,
+        #okta-sign-in input[type="text"]:focus,
+        #okta-sign-in input[type="password"]:focus,
+        #okta-sign-in input[type="email"]:focus {
+            border-color: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+            outline: none;
+        }
+
+        #okta-sign-in .o-form-input input::placeholder {
+            color: rgba(0, 0, 0, 0.35);
+        }
+
+        /* Primary button — white on dark, matching the page text style */
+        #okta-sign-in .button-primary,
+        #okta-sign-in .btn-primary {
+            background: #1a1a2e !important;
+            border: none !important;
+            border-radius: 8px !important;
+            color: #fff !important;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+        }
+
+        #okta-sign-in .button-primary:hover,
+        #okta-sign-in .btn-primary:hover {
+            background: #2a2a4e !important;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        #okta-sign-in .button-primary:active,
+        #okta-sign-in .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* Secondary / social buttons */
+        #okta-sign-in .social-auth-button,
+        #okta-sign-in .custom-button {
+            background-color: rgba(255, 255, 255, 0.5) !important;
+            border: 1px solid rgba(0, 0, 0, 0.1) !important;
+            border-radius: 8px !important;
+            color: #1a1a2e !important;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        #okta-sign-in .social-auth-button:hover,
+        #okta-sign-in .custom-button:hover {
+            background-color: rgba(255, 255, 255, 0.7) !important;
+            border-color: rgba(0, 0, 0, 0.18) !important;
+        }
+
+        /* Separator / divider */
+        #okta-sign-in .auth-divider .auth-divider-text,
+        #okta-sign-in .separation-line-text {
+            color: rgba(0, 0, 0, 0.35);
+            background-color: rgba(255, 255, 255, 0.88);
+        }
+
+        #okta-sign-in .auth-divider,
+        #okta-sign-in .separation-line {
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        /* Footer inside widget */
+        #okta-sign-in .auth-footer,
+        #okta-sign-in .registration-container {
+            background-color: rgba(255, 255, 255, 0.75);
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        #okta-sign-in .auth-footer a {
+            color: #4a4a7a;
+        }
+
+        #okta-sign-in .auth-footer a:hover {
+            color: #2a2a5e;
+        }
+
+        /* Error/info messages */
+        #okta-sign-in .infobox-error {
+            background-color: rgba(239, 68, 68, 0.08);
+            border-color: rgba(239, 68, 68, 0.25);
+        }
+
+        #okta-sign-in .infobox-error .error-16 {
+            color: #dc2626;
+        }
+
+        /* Footer */
+        .custom-footer {
+            width: 100%;
+            padding: 16px 32px;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+            animation: fadeSlideUp 0.8s ease-out;
+        }
+
+        .custom-footer__copy {
+            color: rgba(255, 255, 255, 0.45);
+            font-size: 0.72rem;
+        }
+
+        /* Animations */
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .custom-header {
+                padding: 16px 20px;
+            }
+
+            .welcome-section__heading {
+                font-size: 1.4rem;
+            }
+
+            #okta-sign-in {
+                border-radius: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="login-bg-image-id" class="login-bg-image tb--background"></div>
+
+    <!-- Decorative floating shapes -->
+    <div class="bg-shape bg-shape--1"></div>
+    <div class="bg-shape bg-shape--2"></div>
+    <div class="bg-shape bg-shape--3"></div>
+
+    <!-- Header -->
+    <header class="custom-header">
+        <span class="custom-header__title">Crestwood</span>
+    </header>
+
+    <!-- Welcome text -->
+    <div class="welcome-section">
+        <h1 class="welcome-section__heading">Welcome Back</h1>
+        <p class="welcome-section__subtext">Sign in to continue to your account</p>
+    </div>
+
+    <!-- Okta widget renders here directly, no wrapper div -->
+    <div id="okta-login-container"></div>
+
+    <!-- Footer -->
+    <footer class="custom-footer">
+        <p class="custom-footer__copy">&copy; Crestwood</p>
+    </footer>
+
+    <!--
+        "OktaUtil" defines a global OktaUtil object
+        that contains methods used to complete the Okta login flow.
+     -->
+    {{{OktaUtil}}}
+
+    <script type="text/javascript" nonce="{{nonceValue}}">
+        // "config" object contains default widget configuration
+        // with any custom overrides defined in your admin settings.
+        var config = OktaUtil.getSignInWidgetConfig();
+
+        // Render the Okta Sign-In Widget
+        var oktaSignIn = new OktaSignIn(config);
+        oktaSignIn.renderEl({ el: '#okta-login-container' },
+            OktaUtil.completeLogin,
+            function(error) {
+                // Logs errors that occur when configuring the widget.
+                // Remove or replace this with your own custom error handler.
+                console.log(error.message, error);
+            }
+        );
+    </script>
+</body>
+</html>

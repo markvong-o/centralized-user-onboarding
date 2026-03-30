@@ -4,7 +4,7 @@ import AvatarMenu from './components/AvatarMenu';
 import './globals.css';
 
 export const metadata = {
-  title: 'Crestwood People — Crestwood',
+  title: 'Crestwood — Crestwood',
   description: 'Employee onboarding and workforce management for Crestwood',
 };
 
@@ -16,7 +16,7 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body>
         <header className="header">
-          <a href="/">Crestwood People</a>
+          <a href="/">Crestwood</a>
           {session && (
             <AvatarMenu name={session.name} email={session.email} role={session.role} />
           )}

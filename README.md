@@ -1,8 +1,8 @@
-# Crestwood People — Centralized User Onboarding
+# Crestwood — Centralized User Onboarding
 
 ## Purpose
 
-Crestwood People is an employee onboarding and workforce management application built on top of **Okta Identity Engine (IDX)**. It allows administrators to register new employees through a centralized portal. Instead of sharing temporary passwords, the system creates the user in Okta, generates a password reset token, and sends a branded activation email so employees can set their own password — delivering a seamless, secure onboarding experience.
+Crestwood is an employee onboarding and workforce management application built on top of **Okta Identity Engine (IDX)**. It allows administrators to register new employees through a centralized portal. Instead of sharing temporary passwords, the system creates the user in Okta, generates a password reset token, and sends a branded activation email so employees can set their own password — delivering a seamless, secure onboarding experience.
 
 > Crestwood is a fictional company. This project is a demonstration/sample application.
 

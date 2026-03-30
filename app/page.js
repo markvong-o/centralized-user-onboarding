@@ -3,7 +3,7 @@ export default function HomePage() {
     <div className="page-center">
       <div className="page-wrap">
         <div className="card glass" style={{ textAlign: 'center' }}>
-          <span className="hero-badge">Crestwood People</span>
+          <span className="hero-badge">Crestwood</span>
           <h1>Welcome to Crestwood</h1>
           <p className="subtitle">
             Streamline your workforce. Onboard new employees, manage profiles, and
